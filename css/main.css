@@ -3,10 +3,15 @@
 /*********************************************
  * GLOBAL
  *********************************************/
-
+@font-face {
+	font-family: Circe;
+	src: url('font/Circe-Regular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal
+}
 body, html {
 	overflow: hidden;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: Circe, Arial, sans-serif;
 	color: #fff;
 	font-size: 11px;
 	background: #010c12;
@@ -38,10 +43,9 @@ canvas {
 .ui {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10px;
-	color: #ffffff;
+	color: #000000;
 	text-align: left;
 	padding: 8px;
-	background-color: rgba(0,0,0,0.4);
 	float: left;
 }
 
@@ -68,33 +72,32 @@ canvas {
 	width: 100%;
 	position: absolute;
 	z-index: 3;
+	font-family: Circe, Helvetica, Arial, sans-serif;
 }
-
+#message button{
+	font-family: Circe, Helvetica, Arial, sans-serif;
+}
 #message {
-	padding: 150px 300px 0 60px;
+	padding: 143px 91px;
+	text-align: center;
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
-
-	font-family: "Montserrat", Helvetica, Arial, sans-serif;
-	font-size: 20px;
+	font-size: 19px;
 	text-transform: uppercase;
 	line-height: 1.4;
 }
 
 #message .start-button {
 	display: inline-block;
-	padding: 10px 20px;
-	font-size: 2em;
-	font-family: inherit;
 	border-radius: 2px;
-	margin-top: 20px;
-	background-color: #eee;
-	color: #222;
-	font-size: 1.6em;
-	text-transform: inherit;
-	transition: all .18s linear;
 
+	font-size: 33px;
+	color: #fff;
+	background-image: url('../button.svg');
+	width:238px;
+	height:63px;
+	background-color: transparent;
 	outline: 0;
 	border: 0;
 	cursor: pointer;
@@ -108,7 +111,9 @@ canvas {
 }
 
 #message p {
-	margin-bottom: 20px;
+	margin-bottom: 52px;
+	line-height: 30px;
+	text-transform: none;
 }
 
 #message a {
@@ -122,11 +127,13 @@ canvas {
 
 .ui h2 {
 	margin-bottom: 20px;
-	color: #eeeeee;
+	color: #6cbeff;
+	font-size: 42px;
 }
 
 .ui p em {
-	color: #feff00;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 .ui ol {
@@ -153,7 +160,13 @@ canvas {
 .ui a.external:hover {
 	color: #ffffff;
 }
-
+#blur{
+	left:0;
+	top:0;
+	position:absolute;
+	border:none;
+	z-index: -1;
+}
 @media screen and (max-width: 600px) {
 	#message {
 		padding: 60px 40px;

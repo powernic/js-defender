@@ -29,7 +29,9 @@ var Core = new function(){
 	};
 
 	var canvas,
-		context;
+		context,
+		canvasBlur,
+		contextBlur;
 
 	var canvasBackground,
 		contextBackground;
@@ -78,6 +80,7 @@ var Core = new function(){
 	this.init = function(){
 
 		canvas = document.getElementById('world');
+		canvasBlur = document.getElementById('blur');
 		canvasBackground = document.getElementById('background');
 		panels = document.getElementById('panels');
 		status = document.getElementById('status');
@@ -87,6 +90,7 @@ var Core = new function(){
 
 		if (canvas && canvas.getContext) {
 			context = canvas.getContext('2d');
+			contextBlur = canvasBlur.getContext('2d');
 
 			contextBackground = canvasBackground.getContext('2d');
 
@@ -140,6 +144,7 @@ var Core = new function(){
 	 * Handles click on the start button in the UI.
 	 */
 	function startButtonClickHandler(event){
+
 		if( playing == false ) {
 			playing = true;
 
@@ -280,6 +285,8 @@ var Core = new function(){
 		// Resize the canvas
 		canvas.width = world.width;
 		canvas.height = world.height;
+		canvasBlur.width = world.width;
+		canvasBlur.height = world.height;
 		canvasBackground.width = world.width;
 		canvasBackground.height = world.height;
 
@@ -622,8 +629,11 @@ var Core = new function(){
 				// play sound
 				CoreAudio.playGameOver();
 			}
+		}else {
+			contextBlur.filter = 'blur(5px)';
+			contextBlur.drawImage(canvasBackground, 0, 0);
+			contextBlur.drawImage(canvas, 0, 0);
 		}
-
 		requestAnimFrame( animate );
 	}
 
@@ -758,4 +768,46 @@ window.requestAnimFrame = (function(){
           };
 })();
 
-Core.init();
+var loadAudio = function (){
+	(function (d, w, c) {
+		var n = d.getElementsByTagName("script")[0],
+			s = d.createElement("script"),
+			f = function () { n.parentNode.insertBefore(s, n); };
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = "js/timbre.js";
+		s.onload = function(){
+			var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "js/core-audio.js";
+			s.onload = function() {
+				Core.init();
+			}
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		}
+		if (w.opera == "[object Opera]") {
+			d.addEventListener("DOMContentLoaded", f, false);
+		} else { f(); }
+	})(document, window );
+
+	document.removeEventListener('mousemove',loadAudio,true);
+	document.removeEventListener('mousedown', loadAudio, true);
+	document.removeEventListener('mouseup', loadAudio, true);
+	document.removeEventListener('touchstart', loadAudio, true);
+	document.removeEventListener('touchmove', loadAudio, true);
+	document.removeEventListener('click', loadAudio, true);
+	document.removeEventListener('keyup', loadAudio, true);
+};
+
+document.addEventListener('mousemove', loadAudio, true);
+document.addEventListener('mousedown', loadAudio, true);
+document.addEventListener('mouseup', loadAudio, true);
+document.addEventListener('touchstart', loadAudio, true);
+document.addEventListener('touchmove', loadAudio, true);
+document.addEventListener('click', loadAudio, true);
+document.addEventListener('keyup', loadAudio, true);
