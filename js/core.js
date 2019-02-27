@@ -29,9 +29,7 @@ var Core = new function(){
 	};
 
 	var canvas,
-		context,
-		canvasBlur,
-		contextBlur;
+		context;
 
 	var canvasBackground,
 		contextBackground;
@@ -80,7 +78,6 @@ var Core = new function(){
 	this.init = function(){
 
 		canvas = document.getElementById('world');
-		canvasBlur = document.getElementById('blur');
 		canvasBackground = document.getElementById('background');
 		panels = document.getElementById('panels');
 		status = document.getElementById('status');
@@ -90,7 +87,6 @@ var Core = new function(){
 
 		if (canvas && canvas.getContext) {
 			context = canvas.getContext('2d');
-			contextBlur = canvasBlur.getContext('2d');
 
 			contextBackground = canvasBackground.getContext('2d');
 
@@ -146,6 +142,8 @@ var Core = new function(){
 	function startButtonClickHandler(event){
 
 		if( playing == false ) {
+			canvas.classList.remove('blur');
+			canvasBackground.classList.remove('blur');
 			playing = true;
 
 			// Reset game properties
@@ -176,6 +174,8 @@ var Core = new function(){
 	 */
 	function gameOver() {
 		playing = false;
+		canvas.classList.add('blur');
+		canvasBackground.classList.add('blur');
 
 		// Determine the duration of the game
 		duration = new Date().getTime() - time;
@@ -188,7 +188,7 @@ var Core = new function(){
 
 		// Write the users score to the UI
 		title.innerHTML = 'Конец игры! (' + score + ' очков)';
-
+		startButton.innerHTML = 'Сыграть еще';
 		// Update the status bar with the final score and time
 		scoreText = 'Score: <span>' + Math.round( score ) + '</span>';
 		scoreText += ' Time: <span>' + Math.round( ( ( new Date().getTime() - time ) / 1000 ) * 100 ) / 100 + 's</span>';
@@ -285,8 +285,7 @@ var Core = new function(){
 		// Resize the canvas
 		canvas.width = world.width;
 		canvas.height = world.height;
-		canvasBlur.width = world.width;
-		canvasBlur.height = world.height;
+
 		canvasBackground.width = world.width;
 		canvasBackground.height = world.height;
 
@@ -441,38 +440,6 @@ var Core = new function(){
 			// Core
 			var coreRadius = player.energyRadius + player.pulseOffset ;
 			context.drawImage(PLAYER_ITEM,player.position.x-coreRadius,player.position.y-coreRadius,coreRadius*2,coreRadius*2);
-			/*
-			context.beginPath();
-			context.fillStyle = "#feff00"; //Ядро звезды
-			context.strokeStyle = "#e2a000"; //Граница звезды
-			context.lineWidth = 1.5;
-
-			player.updateCore();
-
-			var loopedNodes = player.coreNodes.concat();
-			loopedNodes.push( player.coreNodes[0] );
-
-			for( var i = 0; i < loopedNodes.length; i++ ) {
-				p = loopedNodes[i];
-				p2 = loopedNodes[i+1];
-
-				p.position.x += ( (player.position.x + p.normal.x + p.offset.x) - p.position.x ) * 0.2;
-				p.position.y += ( (player.position.y + p.normal.y + p.offset.y) - p.position.y ) * 0.2;
-
-				if( i == 0 ) {
-					// This is the first loop, so we need to start by moving into position
-					context.moveTo( p.position.x, p.position.y );
-				}
-				else if( p2 ) {
-					// Draw a curve between the current and next trail point
-					context.quadraticCurveTo( p.position.x, p.position.y, p.position.x + ( p2.position.x - p.position.x ) / 2, p.position.y + ( p2.position.y - p.position.y ) / 2 );
-				}
-			}
-
-			context.closePath();
-			context.fill();
-			context.stroke();
-*/
 		}
 
 		if( spaceIsDown && player.energy > 10 ) {
@@ -629,10 +596,6 @@ var Core = new function(){
 				// play sound
 				CoreAudio.playGameOver();
 			}
-		}else {
-			contextBlur.filter = 'blur(5px)';
-			contextBlur.drawImage(canvasBackground, 0, 0);
-			contextBlur.drawImage(canvas, 0, 0);
 		}
 		requestAnimFrame( animate );
 	}
