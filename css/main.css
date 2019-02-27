@@ -5,7 +5,7 @@
  *********************************************/
 @font-face {
 	font-family: Circe;
-	src: url('font/Circe-Regular.woff') format('woff');
+	src: url('../font/Circe-Regular.woff') format('woff');
 	font-weight: 400;
 	font-style: normal
 }
@@ -94,7 +94,7 @@ canvas {
 
 	font-size: 33px;
 	color: #fff;
-	background-image: url('../button.svg');
+	background-image: url('../images/button.svg');
 	width:238px;
 	height:63px;
 	background-color: transparent;
@@ -107,7 +107,7 @@ canvas {
 }
 
 #message .start-button:hover {
-	background-color: #fff;
+	opacity: 0.8;
 }
 
 #message p {

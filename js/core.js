@@ -137,7 +137,7 @@ var Core = new function(){
 		img.onload = function () {
 			contextBackground.drawImage(img, 0, 0, canvas.width, canvas.height);
 		};
-		img.src = 'frost.jpg';
+		img.src = 'images/frost.jpg';
 	}
 
 	/**
@@ -328,20 +328,20 @@ var Core = new function(){
 		organismEnemyImg.onload = function () {
 			ORGANISM_ENEMY_ITEM = organismEnemyImg;
 		};
-		organismEnemyImg.src = 'snow.svg';
+		organismEnemyImg.src = 'images/snow.svg';
 
 		var organismEnergyImg = new Image();
 		organismEnergyImg.onload = function () {
 			ORGANISM_ENERGY_ITEM = organismEnergyImg;
 		};
-		organismEnergyImg.src = 'star.svg';
+		organismEnergyImg.src = 'images/star.svg';
 
 
 		var playerImg = new Image();
 		playerImg.onload = function () {
 			PLAYER_ITEM = playerImg;
 		};
-		playerImg.src = 'player.svg';
+		playerImg.src = 'images/player.svg';
 	}
 
 	/**
