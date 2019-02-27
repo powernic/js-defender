@@ -472,9 +472,9 @@ var Core = new function(){
 			player.energy -= 0.1;
 
 			context.beginPath();
-			context.strokeStyle = '#648d93';
+			context.strokeStyle = '#feff00';
 			context.lineWidth = 1;
-			context.fillStyle = 'rgba( 0, 100, 100, ' + ( player.energy / 100 ) * 0.9 + ' )';
+			context.fillStyle = 'rgba( 254, 255, 0, ' + ( player.energy / 100 ) * 0.9 + ' )';
 			context.arc( player.position.x, player.position.y, player.radius, 0, Math.PI*2, true );
 			context.fill();
 			context.stroke();
