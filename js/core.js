@@ -479,11 +479,6 @@ var Core = new function(){
 
 			context.drawImage(organism, p.position.x-p.size,p.position.y-p.size, p.size*2, p.size*2);
 
-			//Рисуем окружность
-			/*context.beginPath();
-			context.arc(p.position.x, p.position.y, p.size/2, 0, Math.PI*2, true);
-			context.fill();*/
-
 
 			var angle = Math.atan2( p.position.y - player.position.y, p.position.x - player.position.x );
 
@@ -518,7 +513,7 @@ var Core = new function(){
 					}
 
 					if (p.type == ORGANISM_ENERGY) {
-						player.energy += 8;
+						player.energy += 18;
 						score += 30;
 
 						// play sound
@@ -731,6 +726,7 @@ window.requestAnimFrame = (function(){
           };
 })();
 
+var events = ['mousemove', 'mousedown', 'mouseup', 'touchstart', 'touchmove', 'click', 'keyup'];
 var loadAudio = function (){
 	(function (d, w, c) {
 		var n = d.getElementsByTagName("script")[0],
@@ -758,19 +754,11 @@ var loadAudio = function (){
 		} else { f(); }
 	})(document, window );
 
-	document.removeEventListener('mousemove',loadAudio,true);
-	document.removeEventListener('mousedown', loadAudio, true);
-	document.removeEventListener('mouseup', loadAudio, true);
-	document.removeEventListener('touchstart', loadAudio, true);
-	document.removeEventListener('touchmove', loadAudio, true);
-	document.removeEventListener('click', loadAudio, true);
-	document.removeEventListener('keyup', loadAudio, true);
+	for (var i = 0; i < events.length; i++) {
+		document.removeEventListener(events[i], loadAudio, true);
+	}
 };
 
-document.addEventListener('mousemove', loadAudio, true);
-document.addEventListener('mousedown', loadAudio, true);
-document.addEventListener('mouseup', loadAudio, true);
-document.addEventListener('touchstart', loadAudio, true);
-document.addEventListener('touchmove', loadAudio, true);
-document.addEventListener('click', loadAudio, true);
-document.addEventListener('keyup', loadAudio, true);
+for (var i = 0; i < events.length; i++) {
+	document.addEventListener(events[i], loadAudio, true);
+}
